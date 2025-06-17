@@ -1,0 +1,253 @@
+[2025-06-17T09:16:23.034+0000] {local_task_job_runner.py:120} INFO - ::group::Pre task execution logs
+[2025-06-17T09:16:23.166+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: meat_prices_carrefour.scrape_meat_prices manual__2025-06-17T09:16:22.432948+00:00 [queued]>
+[2025-06-17T09:16:23.172+0000] {taskinstance.py:2076} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: meat_prices_carrefour.scrape_meat_prices manual__2025-06-17T09:16:22.432948+00:00 [queued]>
+[2025-06-17T09:16:23.174+0000] {taskinstance.py:2306} INFO - Starting attempt 1 of 1
+[2025-06-17T09:16:23.181+0000] {taskinstance.py:2330} INFO - Executing <Task(PythonOperator): scrape_meat_prices> on 2025-06-17 09:16:22.432948+00:00
+[2025-06-17T09:16:23.185+0000] {standard_task_runner.py:63} INFO - Started process 211 to run task
+[2025-06-17T09:16:23.187+0000] {standard_task_runner.py:90} INFO - Running: ['***', 'tasks', 'run', 'meat_prices_carrefour', 'scrape_meat_prices', 'manual__2025-06-17T09:16:22.432948+00:00', '--job-id', '21', '--raw', '--subdir', 'DAGS_FOLDER/tes.py', '--cfg-path', '/tmp/tmpxwu1t4v7']
+[2025-06-17T09:16:23.189+0000] {standard_task_runner.py:91} INFO - Job 21: Subtask scrape_meat_prices
+[2025-06-17T09:16:23.224+0000] {task_command.py:426} INFO - Running <TaskInstance: meat_prices_carrefour.scrape_meat_prices manual__2025-06-17T09:16:22.432948+00:00 [running]> on host 576e15af3b1b
+[2025-06-17T09:16:23.284+0000] {taskinstance.py:2648} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='meat_prices_carrefour' AIRFLOW_CTX_TASK_ID='scrape_meat_prices' AIRFLOW_CTX_EXECUTION_DATE='2025-06-17T09:16:22.432948+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-06-17T09:16:22.432948+00:00'
+[2025-06-17T09:16:23.286+0000] {taskinstance.py:430} INFO - ::endgroup::
+[2025-06-17T09:16:23.733+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=1
+[2025-06-17T09:16:54.281+0000] {tes.py:64} INFO - 📦 8 elementos encontrados
+[2025-06-17T09:16:56.367+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=2
+[2025-06-17T09:17:04.012+0000] {tes.py:64} INFO - 📦 8 elementos encontrados
+[2025-06-17T09:17:06.090+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=3
+[2025-06-17T09:17:15.597+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:17:17.598+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=4
+[2025-06-17T09:17:23.619+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:17:25.619+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=5
+[2025-06-17T09:17:35.611+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:17:37.614+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=6
+[2025-06-17T09:17:48.115+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:17:50.118+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=7
+[2025-06-17T09:17:58.221+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:18:00.223+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=8
+[2025-06-17T09:18:06.616+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:18:08.618+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=9
+[2025-06-17T09:18:14.729+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:18:19.592+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=10
+[2025-06-17T09:18:25.967+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:18:27.969+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=11
+[2025-06-17T09:18:34.166+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:18:36.168+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=12
+[2025-06-17T09:18:42.477+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:18:44.479+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=13
+[2025-06-17T09:18:52.762+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:18:54.763+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=14
+[2025-06-17T09:19:02.258+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:19:04.259+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=15
+[2025-06-17T09:19:10.637+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:19:12.638+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=16
+[2025-06-17T09:19:20.352+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:19:25.215+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=17
+[2025-06-17T09:19:32.148+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:19:34.151+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=18
+[2025-06-17T09:19:39.935+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:19:41.936+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=19
+[2025-06-17T09:19:47.873+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:19:49.875+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=20
+[2025-06-17T09:19:59.565+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:20:01.568+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=21
+[2025-06-17T09:20:07.378+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:20:09.379+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=22
+[2025-06-17T09:20:15.807+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:20:17.808+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=23
+[2025-06-17T09:20:24.107+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:20:26.109+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=24
+[2025-06-17T09:20:36.029+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:20:38.032+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=25
+[2025-06-17T09:20:45.036+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:20:47.039+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=26
+[2025-06-17T09:20:53.642+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:20:55.643+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=27
+[2025-06-17T09:21:04.516+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:21:06.518+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=28
+[2025-06-17T09:21:12.844+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:21:14.846+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=29
+[2025-06-17T09:21:21.129+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:21:23.131+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=30
+[2025-06-17T09:21:29.079+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:21:31.079+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=31
+[2025-06-17T09:21:40.456+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:21:42.458+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=32
+[2025-06-17T09:21:49.245+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:21:51.248+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=33
+[2025-06-17T09:21:58.906+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:22:00.909+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=34
+[2025-06-17T09:22:09.981+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:22:11.982+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=35
+[2025-06-17T09:22:18.179+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:22:20.182+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=36
+[2025-06-17T09:22:26.459+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:22:28.461+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=37
+[2025-06-17T09:22:34.558+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:22:36.561+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=38
+[2025-06-17T09:22:45.813+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:22:47.815+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=39
+[2025-06-17T09:22:54.996+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:22:56.998+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=40
+[2025-06-17T09:23:03.710+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:23:05.711+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=41
+[2025-06-17T09:23:11.797+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:23:16.617+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=42
+[2025-06-17T09:23:22.685+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:23:24.686+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=43
+[2025-06-17T09:23:30.335+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:23:32.336+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=44
+[2025-06-17T09:23:38.229+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:23:40.233+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=45
+[2025-06-17T09:23:50.543+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:23:52.545+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=46
+[2025-06-17T09:23:59.714+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:24:01.716+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=47
+[2025-06-17T09:24:07.338+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:24:09.339+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=48
+[2025-06-17T09:24:16.616+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:24:21.532+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=49
+[2025-06-17T09:24:27.926+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:24:29.928+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=50
+[2025-06-17T09:24:36.430+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:24:38.431+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=51
+[2025-06-17T09:24:44.458+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:24:46.460+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=52
+[2025-06-17T09:24:55.655+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:24:57.657+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=53
+[2025-06-17T09:25:03.695+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:25:05.698+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=54
+[2025-06-17T09:25:13.393+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:25:15.396+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=55
+[2025-06-17T09:25:21.516+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:25:23.519+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=56
+[2025-06-17T09:25:32.538+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:25:34.540+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=57
+[2025-06-17T09:25:40.737+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:25:42.738+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=58
+[2025-06-17T09:25:49.015+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:25:51.017+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=59
+[2025-06-17T09:25:59.509+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:26:01.510+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=60
+[2025-06-17T09:26:08.341+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:26:10.346+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=61
+[2025-06-17T09:26:16.958+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:26:18.960+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=62
+[2025-06-17T09:26:24.656+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:26:26.657+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=63
+[2025-06-17T09:26:36.025+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:26:38.028+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=64
+[2025-06-17T09:26:44.693+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:26:46.694+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=65
+[2025-06-17T09:26:52.989+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:26:54.992+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=66
+[2025-06-17T09:27:00.847+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:27:05.717+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=67
+[2025-06-17T09:27:12.289+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:27:14.291+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=68
+[2025-06-17T09:27:20.307+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:27:22.310+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=69
+[2025-06-17T09:27:29.477+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:27:31.480+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=70
+[2025-06-17T09:27:40.727+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:27:42.729+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=71
+[2025-06-17T09:27:49.489+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:27:51.491+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=72
+[2025-06-17T09:27:57.842+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:27:59.843+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=73
+[2025-06-17T09:28:05.993+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:28:09.071+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=74
+[2025-06-17T09:28:17.796+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:28:19.798+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=75
+[2025-06-17T09:28:25.924+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:28:27.925+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=76
+[2025-06-17T09:28:34.060+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:28:36.066+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=77
+[2025-06-17T09:28:44.866+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:28:46.867+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=78
+[2025-06-17T09:28:53.588+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:28:55.591+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=79
+[2025-06-17T09:29:01.613+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:29:03.616+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=80
+[2025-06-17T09:29:09.998+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:29:12.000+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=81
+[2025-06-17T09:29:21.316+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:29:23.318+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=82
+[2025-06-17T09:29:29.384+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:29:31.385+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=83
+[2025-06-17T09:29:37.338+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:29:39.340+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=84
+[2025-06-17T09:29:45.050+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:29:50.011+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=85
+[2025-06-17T09:29:56.131+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:29:58.134+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=86
+[2025-06-17T09:30:04.907+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:30:06.909+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=87
+[2025-06-17T09:30:13.168+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:30:15.170+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=88
+[2025-06-17T09:30:24.931+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:30:26.932+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=89
+[2025-06-17T09:30:33.361+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:30:35.363+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=90
+[2025-06-17T09:30:41.562+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:30:43.564+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=91
+[2025-06-17T09:30:49.589+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:30:51.591+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=92
+[2025-06-17T09:31:00.689+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:31:02.690+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=93
+[2025-06-17T09:31:09.464+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:31:11.466+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=94
+[2025-06-17T09:31:18.341+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:31:20.343+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=95
+[2025-06-17T09:31:29.050+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:31:31.051+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=96
+[2025-06-17T09:31:37.075+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:31:39.078+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=97
+[2025-06-17T09:31:48.032+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:31:50.033+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=98
+[2025-06-17T09:31:56.535+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:32:01.386+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=99
+[2025-06-17T09:32:08.544+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:32:10.550+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=100
+[2025-06-17T09:32:17.150+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:32:19.153+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=101
+[2025-06-17T09:32:26.186+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:32:28.188+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=102
+[2025-06-17T09:32:37.533+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:32:39.535+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=103
+[2025-06-17T09:32:45.927+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:32:47.929+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=104
+[2025-06-17T09:32:54.078+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:32:56.081+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=105
+[2025-06-17T09:33:02.233+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:33:07.265+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=106
+[2025-06-17T09:33:14.059+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:33:16.062+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=107
+[2025-06-17T09:33:25.539+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:33:27.541+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=108
+[2025-06-17T09:33:34.096+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:33:36.098+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=109
+[2025-06-17T09:33:46.009+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:33:48.012+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=110
+[2025-06-17T09:33:54.050+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:33:56.052+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=111
+[2025-06-17T09:34:02.544+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:34:04.546+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=112
+[2025-06-17T09:34:13.282+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:34:15.284+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=113
+[2025-06-17T09:34:22.376+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:34:24.377+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=114
+[2025-06-17T09:34:31.135+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:34:33.138+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=115
+[2025-06-17T09:34:38.835+0000] {tes.py:64} INFO - 📦 0 elementos encontrados
+[2025-06-17T09:34:40.848+0000] {tes.py:52} INFO - 🌐 Visiting https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche?page=116
+[2025-06-17T09:34:46.027+0000] {local_task_job_runner.py:124} ERROR - Received SIGTERM. Terminating subprocesses
+[2025-06-17T09:34:46.035+0000] {process_utils.py:132} INFO - Sending 15 to group 211. PIDs of all processes in the group: [212, 224, 226, 227, 243, 280, 242, 211]
+[2025-06-17T09:34:46.037+0000] {process_utils.py:87} INFO - Sending the signal 15 to group 211
+[2025-06-17T09:34:46.038+0000] {taskinstance.py:2611} ERROR - Received SIGTERM. Terminating subprocesses.
+[2025-06-17T09:34:46.132+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=224, status='terminated', started='09:16:22') (224) terminated with exit code None
+[2025-06-17T09:34:46.133+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=280, status='terminated', started='09:16:22') (280) terminated with exit code None
+[2025-06-17T09:34:46.134+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=226, status='terminated', started='09:16:22') (226) terminated with exit code None
+[2025-06-17T09:34:46.134+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=243, status='terminated', started='09:16:22') (243) terminated with exit code None
+[2025-06-17T09:34:46.134+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=227, status='terminated', started='09:16:22') (227) terminated with exit code None
+[2025-06-17T09:34:46.135+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=242, status='terminated', started='09:16:22') (242) terminated with exit code None
+[2025-06-17T09:34:46.267+0000] {process_utils.py:80} INFO - Process psutil.Process(pid=212, status='terminated', started='09:16:22') (212) terminated with exit code None

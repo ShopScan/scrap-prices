@@ -1,0 +1,6 @@
+# requirements.txt
+# Aquí solo va lo que quieras añadir en caliente; Playwright YA viene en la imagen.
+# Ejemplos:
+requests==2.32.0
+beautifulsoup4==4.12.3
+pandas==2.2.2
