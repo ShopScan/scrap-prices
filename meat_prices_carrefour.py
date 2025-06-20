@@ -222,7 +222,13 @@ async def main():
                                 
                                 # Verificar que el elemento contenga información de producto válida
                                 if '$' in element_text and len(element_text.strip()) > 10:
-                                    meat_items.append(element_text)
+                                    element_with_source = {
+                                        "text": element_text,
+                                        "source": 'Carrefour',
+                                        "url": url,
+                                        "page": page_num
+                                    }
+                                    meat_items.append(element_with_source)
                                     valid_products_found += 1
                                 else:
                                     print(f"Elemento #{i} no parece ser un producto válido")
@@ -282,6 +288,8 @@ async def main():
                     "metadata": {
                         "total_items": 0,
                         "pages_processed": page_num - 1,
+                        "source": "Carrefour",
+                        "url": "https://www.carrefour.com.ar/Lacteos-y-productos",
                         "timestamp": "2025-06-17",
                         "reason": "No se encontraron productos o se detuvieron por páginas vacías consecutivas"
                     },
