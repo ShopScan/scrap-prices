@@ -1,21 +1,24 @@
-# Compose specification file  – SIN 'version:'
 services:
   postgres:
     image: postgres:16
     restart: unless-stopped
+    ports:
+      - "5432:5432"
+    container_name: postgres
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
       POSTGRES_DB: airflow
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U airflow"]
       interval: 10s
       retries: 5
 
   airflow-webserver:
-    build: ./airflow          # usa la imagen custom que incluye Playwright
+    build: ./airflow
     container_name: airflow-web
     restart: unless-stopped
     depends_on:
@@ -23,7 +26,7 @@ services:
         condition: service_healthy
     environment:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-      AIRFLOW__CORE__EXECUTOR: LocalExecutor     # suficiente para tareas async
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__WEBSERVER__SECRET_KEY: "REEMPLAZAME"
       AIRFLOW__core__LOAD_EXAMPLES: "False"
     ports:
@@ -32,14 +35,16 @@ services:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
-      - ./requirements.txt:/requirements.txt   # instala deps extra al arrancar
+      - ./requirements.txt:/requirements.txt
     command: >
       bash -c "
-        airflow db migrate &&
-        airflow users create --username admin --password admin \
-                             --firstname Admin --lastname User --role Admin \
-                             --email admin@example.com || true
-        pip install --no-cache-dir -r /requirements.txt ;
+        echo '⏳ Esperando que PostgreSQL esté listo...' && \
+        while ! pg_isready -h postgres -U airflow; do sleep 2; done && \
+        echo '✅ Base de datos disponible. Migrando...' && \
+        airflow db migrate && \
+        echo '👤 Verificando si el usuario admin existe...' && \
+        airflow users list | grep -q 'admin' || airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com && \
+        echo '🚀 Iniciando webserver...' && \
         exec airflow webserver
       "
 
@@ -61,7 +66,7 @@ services:
     command: >
       bash -c "pip install --no-cache-dir -r /requirements.txt && exec airflow scheduler"
 
-  airflow-triggerer:        # necesario para tareas deferrables/async
+  airflow-triggerer:
     build: ./airflow
     container_name: airflow-triggerer
     restart: unless-stopped
