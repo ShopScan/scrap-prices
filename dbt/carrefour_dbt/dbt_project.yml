@@ -1,0 +1,12 @@
+name: 'carrefour_dbt'
+version: '1.0.0'
+
+profile: 'fran'  # Debe coincidir con el nombre en profiles.yml
+
+config-version: 2
+
+model-paths: ["models"]
+
+models:
+  carrefour_dbt:
+    +materialized: view

@@ -36,6 +36,7 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./requirements.txt:/requirements.txt
+      - ./dbt:/opt/airflow/dbt
     command: >
       bash -c "
         echo '⏳ Esperando que PostgreSQL esté listo...' && \
@@ -63,6 +64,7 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./requirements.txt:/requirements.txt
+      - ./dbt:/opt/airflow/dbt
     command: >
       bash -c "pip install --no-cache-dir -r /requirements.txt && exec airflow scheduler"
 

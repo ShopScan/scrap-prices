@@ -1,0 +1,12 @@
+fran:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: postgres  # nombre del servicio en docker-compose o IP accesible
+      user: airflow
+      password: airflow
+      port: 5432
+      dbname: playground
+      schema: public       # puede ser "public" u otro esquema
+      threads: 1

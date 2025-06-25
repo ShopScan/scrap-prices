@@ -20,8 +20,13 @@ RUN apt-get update && apt-get install -y \
     libasound2 \
     xdg-utils \
     && rm -rf /var/lib/apt/lists/*
+    
+RUN mkdir -p /opt/airflow/dbt/carrefour_dbt/logs /opt/airflow/dbt/carrefour_dbt/target \
+    && chmod -R 777 /opt/airflow/dbt/carrefour_dbt/logs /opt/airflow/dbt/carrefour_dbt/target
 
 USER airflow
 
 RUN pip install --no-cache-dir "playwright>=1.44,<2" && \
-    playwright install chromium
+    playwright install chromium && \
+    pip install --no-cache-dir dbt-postgres==1.7.11
+
