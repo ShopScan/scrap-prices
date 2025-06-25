@@ -9037,3 +9037,77 @@ File Path                                        PID    Runtime      # DAGs    #
 /opt/airflow/dags/orquestador_dulce_de_leche.py                           1           0  0.10s           2025-06-25T20:01:13
 /opt/airflow/dags/almacenamiento.py                                       1           0  0.08s           2025-06-25T20:01:13
 ================================================================================
+[2025-06-25T20:02:05.734+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                        PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/orquestador_dulce_de_leche.py                           1           0  0.11s           2025-06-25T20:01:44
+/opt/airflow/dags/almacenamiento.py                                       1           0  0.08s           2025-06-25T20:01:44
+================================================================================
+[2025-06-25T20:02:37.298+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                        PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/orquestador_dulce_de_leche.py                           1           0  0.10s           2025-06-25T20:02:16
+/opt/airflow/dags/almacenamiento.py                                       1           0  0.09s           2025-06-25T20:02:16
+================================================================================
+[2025-06-25T20:03:09.357+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                        PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/orquestador_dulce_de_leche.py                           1           0  0.10s           2025-06-25T20:02:46
+/opt/airflow/dags/almacenamiento.py                                       1           0  0.08s           2025-06-25T20:02:46
+================================================================================
+[2025-06-25T20:03:40.152+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                        PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/orquestador_dulce_de_leche.py                           1           0  0.12s           2025-06-25T20:03:18
+/opt/airflow/dags/almacenamiento.py                                       1           0  0.09s           2025-06-25T20:03:18
+================================================================================
+[2025-06-25T20:04:11.675+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                        PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/orquestador_dulce_de_leche.py                           1           0  0.13s           2025-06-25T20:03:49
+/opt/airflow/dags/almacenamiento.py                                       1           0  0.10s           2025-06-25T20:03:49
+================================================================================
+[2025-06-25T20:04:43.161+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                        PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/orquestador_dulce_de_leche.py                           1           0  0.10s           2025-06-25T20:04:21
+/opt/airflow/dags/almacenamiento.py                                       1           0  0.08s           2025-06-25T20:04:21
+================================================================================
+[2025-06-25T20:05:14.694+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                        PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/orquestador_dulce_de_leche.py                           1           0  0.11s           2025-06-25T20:04:52
+/opt/airflow/dags/almacenamiento.py                                       1           0  0.08s           2025-06-25T20:04:52
+================================================================================
+[2025-06-25T20:05:46.213+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                        PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+-----------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/orquestador_dulce_de_leche.py                           1           0  0.11s           2025-06-25T20:05:24
+/opt/airflow/dags/almacenamiento.py                                       1           0  0.08s           2025-06-25T20:05:24
+================================================================================
+[2025-06-25T20:06:03.692+0000] {manager.py:737} INFO - Searching for files in /opt/airflow/dags
+[2025-06-25T20:06:03.698+0000] {manager.py:740} INFO - There are 2 files in /opt/airflow/dags
