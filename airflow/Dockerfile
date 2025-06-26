@@ -24,9 +24,16 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /opt/airflow/dbt/carrefour_dbt/logs /opt/airflow/dbt/carrefour_dbt/target \
     && chmod -R 777 /opt/airflow/dbt/carrefour_dbt/logs /opt/airflow/dbt/carrefour_dbt/target
 
+COPY ./entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
 USER airflow
 
 RUN pip install --no-cache-dir "playwright>=1.44,<2" && \
     playwright install chromium && \
     pip install --no-cache-dir dbt-postgres==1.7.11
+
 

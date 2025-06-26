@@ -17,7 +17,7 @@ with DAG(
 
     init_dirs = BashOperator(
         task_id="init_dirs",
-        bash_command="mkdir -p /opt/airflow/dbt/carrefour_dbt/logs /opt/airflow/dbt/carrefour_dbt/target && chmod -R 777 /opt/airflow/dbt/carrefour_dbt/logs /opt/airflow/dbt/carrefour_dbt/target",
+        bash_command="mkdir -p /opt/airflow/dbt/carrefour_dbt/logs /opt/airflow/dbt/carrefour_dbt/target && chmod -R 777 /opt/airflow/dbt/carrefour_dbt/logs /opt/airflow/dbt/carrefour_dbt/target 2>/dev/null || echo 'Warning: Could not change permissions (this is normal with mounted volumes)'",
     )
 
     dbt_run = BashOperator(
