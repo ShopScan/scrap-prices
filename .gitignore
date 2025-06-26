@@ -183,3 +183,4 @@ screenshots/
 config.ini
 settings.py
 secrets.py
+logs/dag_processor_manager/dag_processor_manager.log
