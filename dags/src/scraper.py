@@ -1,28 +1,17 @@
 """
 Módulo de scraping modular para Carrefour
-Contiene la clase CarrefourScraper y configuraciones relacionadas
+Contiene la clase WebScraper y configuraciones relacionadas
 """
 
 import asyncio
 import logging
 from datetime import datetime
 from typing import List, Dict
-from dataclasses import dataclass
 from playwright.async_api import async_playwright
+from .config import ScrapingConfig
 
 
-@dataclass
-class ScrapingConfig:
-    """Configuración para el scraping de productos"""
-    base_url: str
-    product_selectors: List[str]
-    no_results_selectors: List[str]
-    max_empty_pages: int = 2
-    max_scroll_attempts: int = 8
-    target_elements: int = 16
-
-
-class CarrefourScraper:
+class WebScraper:
     """Clase para scraping de productos de Carrefour"""
     
     def __init__(self, config: ScrapingConfig):
@@ -45,7 +34,17 @@ class CarrefourScraper:
                     except:
                         continue
         
-        # Verificar mensajes de "sin resultados"
+        # Verificar URL sospechosa
+        current_url = page.url
+        invalid_url_indicators = ['404', 'error', 'not-found', 'pagina-no-encontrada']
+        url_indicates_no_page = any(indicator in current_url.lower() for indicator in invalid_url_indicators)
+        
+        # Si encontramos productos válidos, priorizar eso sobre mensajes de "sin resultados"
+        if total_products > 0:
+            self.logger.info(f"Productos encontrados: {total_products}, URL sospechosa: {url_indicates_no_page}")
+            return not url_indicates_no_page
+        
+        # Solo si no hay productos, verificar mensajes de "sin resultados"
         visible_no_results = False
         for selector in self.config.no_results_selectors:
             try:
@@ -54,14 +53,10 @@ class CarrefourScraper:
                     is_visible = await element.is_visible()
                     if is_visible:
                         visible_no_results = True
+                        self.logger.info(f"Mensaje 'sin resultados' detectado con selector: {selector}")
                         break
             except:
                 pass
-        
-        # Verificar URL sospechosa
-        current_url = page.url
-        invalid_url_indicators = ['404', 'error', 'not-found', 'pagina-no-encontrada']
-        url_indicates_no_page = any(indicator in current_url.lower() for indicator in invalid_url_indicators)
         
         self.logger.info(f"Productos encontrados: {total_products}, Mensaje 'sin resultados' visible: {visible_no_results}, URL sospechosa: {url_indicates_no_page}")
         
@@ -272,92 +267,9 @@ class CarrefourScraper:
         return page_items
 
 
-# Configuraciones predefinidas para diferentes productos
-class ProductConfigs:
-    """Configuraciones predefinidas para diferentes productos de Carrefour"""
-    
-    # Selectores comunes para la mayoría de productos
-    COMMON_PRODUCT_SELECTORS = [
-        '.valtech-carrefourar-search-result-3-x-galleryItem',
-        'div[class*="galleryItem"]',
-        'article'
-    ]
-    
-    COMMON_NO_RESULTS_SELECTORS = [
-        'text="Sin resultados"',
-        'text="No se encontraron productos"',
-        'text="No hay productos"',
-        'text="Página no encontrada"',
-        'text="404"',
-        '[class*="titleNotFound"]',
-        '[class*="not-found"]',
-        '[class*="no-results"]',
-        '[class*="empty"]'
-    ]
-    
-    @classmethod
-    def get_dulce_de_leche_config(cls) -> ScrapingConfig:
-        """Configuración para dulce de leche"""
-        return ScrapingConfig(
-            base_url="https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche",
-            product_selectors=cls.COMMON_PRODUCT_SELECTORS,
-            no_results_selectors=cls.COMMON_NO_RESULTS_SELECTORS,
-            max_empty_pages=2,
-            max_scroll_attempts=8,
-            target_elements=16
-        )
-    
-    @classmethod
-    def get_carnes_config(cls) -> ScrapingConfig:
-        """Configuración para carnes"""
-        return ScrapingConfig(
-            base_url="https://www.carrefour.com.ar/Carnes",
-            product_selectors=cls.COMMON_PRODUCT_SELECTORS,
-            no_results_selectors=cls.COMMON_NO_RESULTS_SELECTORS,
-            max_empty_pages=3,
-            max_scroll_attempts=10,
-            target_elements=20
-        )
-    
-    @classmethod
-    def get_lacteos_config(cls) -> ScrapingConfig:
-        """Configuración para lácteos"""
-        return ScrapingConfig(
-            base_url="https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Lacteos",
-            product_selectors=cls.COMMON_PRODUCT_SELECTORS,
-            no_results_selectors=cls.COMMON_NO_RESULTS_SELECTORS,
-            max_empty_pages=2,
-            max_scroll_attempts=8,
-            target_elements=16
-        )
-    
-    @classmethod
-    def get_bebidas_config(cls) -> ScrapingConfig:
-        """Configuración para bebidas"""
-        return ScrapingConfig(
-            base_url="https://www.carrefour.com.ar/Bebidas",
-            product_selectors=cls.COMMON_PRODUCT_SELECTORS,
-            no_results_selectors=cls.COMMON_NO_RESULTS_SELECTORS,
-            max_empty_pages=3,
-            max_scroll_attempts=8,
-            target_elements=16
-        )
-    
-    @classmethod
-    def get_custom_config(cls, base_url: str, **kwargs) -> ScrapingConfig:
-        """Crear configuración personalizada"""
-        return ScrapingConfig(
-            base_url=base_url,
-            product_selectors=kwargs.get('product_selectors', cls.COMMON_PRODUCT_SELECTORS),
-            no_results_selectors=kwargs.get('no_results_selectors', cls.COMMON_NO_RESULTS_SELECTORS),
-            max_empty_pages=kwargs.get('max_empty_pages', 2),
-            max_scroll_attempts=kwargs.get('max_scroll_attempts', 8),
-            target_elements=kwargs.get('target_elements', 16)
-        )
-
 
 # Función de utilidad para scraping rápido
 async def scrape_product_category(config: ScrapingConfig) -> Dict:
     """Función de utilidad para scrapear cualquier categoría de productos"""
-    scraper = CarrefourScraper(config)
+    scraper = WebScraper(config)
     return await scraper.scrape_products()
