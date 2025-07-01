@@ -8,7 +8,7 @@ default_args = {
 }
 
 with DAG(
-    dag_id="dbt_postgres_test_dag",
+    dag_id="dbt_dag",
     default_args=default_args,
     schedule_interval=None,
     catchup=False,

@@ -4,16 +4,30 @@ from airflow.operators.python import PythonOperator
 import asyncio
 import json
 import logging
-from typing import Dict, List
+import tempfile
+import requests
 
+# === Bucket Configuration ===
+import os
+import boto3
+from botocore.exceptions import ClientError, EndpointConnectionError
+
+# === Custom Imports ===
 from src.vea_product_configs import VeaProductConfigs
 from src.scraper import scrape_product_category
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ====== Configuración del DAG ======
+# === Bucket Name ===
+bucket_name = 'vea-dulce-de-leche-prices'
 
+# === MinIO Config ===
+minio_endpoint = os.getenv('MINIO_ENDPOINT', 'http://localhost:9000')
+minio_access_key = os.getenv('MINIO_ACCESS_KEY', 'minioadmin')
+minio_secret_key = os.getenv('MINIO_SECRET_KEY', 'minioadmin')
+
+# ====== Configuración del DAG ======
 default_args = {
     'owner': 'data-team',
     'depends_on_past': False,
@@ -28,18 +42,17 @@ default_args = {
 dag = DAG(
     'vea_dulce_de_leche_prices',
     default_args=default_args,
-    description='Scraping comparativo de precios de dulce de leche entre Carrefour y Vea',
-    schedule_interval='0 9 * * *',  # Ejecutar diariamente a las 9:00 AM
+    schedule_interval='0 9 * * *',
     max_active_runs=1,
     tags=['scraping', 'vea', 'dulce_de_leche']
-)
-
-
+) 
 # ====== Funciones del dag ======
 
 async def scrape_vea_dulce_de_leche():
-    """Scrapear dulce de leche de Vea"""
-    logger.info("=== Iniciando scraping de Vea ===")
+    """
+    Scrapear dulce de leche de Vea
+    """
+    logger.info("Iniciando scraping de Vea")
     
     try:
         config = VeaProductConfigs.get_dulce_de_leche_config()
@@ -55,63 +68,99 @@ async def scrape_vea_dulce_de_leche():
 
 
 def run_vea_scraping(**context):
-    """Tarea de Airflow para scraping de Vea"""
-    logger.info("🏪 Ejecutando scraping de Vea...")
+    """
+    Tarea de Airflow para scraping de Vea
+    """
+    logger.info("Ejecutando scraping de Vea...")
     
     try:
         # Ejecutar el scraping asíncrono
         result = asyncio.run(scrape_vea_dulce_de_leche())
         
         # Obtener los productos
-        products = result.get('items', [])
+        products = result.get('items', [])      
+        logger.info(f"Scraping de Vea completado: {len(products)} productos encontrados")
+
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as temp_file:
+            json.dump(result, temp_file, indent=2, ensure_ascii=False)
+            temp_file_path = temp_file.name
         
-        # Guardar resultado en XCom para la tarea de comparación
-        context['ti'].xcom_push(key='vea_result', value=result)
-        
-        logger.info(f"✅ Scraping de Vea completado: {len(products)} productos encontrados")
-        return result
-        
+        logger.info(f"JSON data saved to temporary file: {temp_file_path}")
+        context['task_instance'].xcom_push(key='json_file_path', value=temp_file_path)
+        return temp_file_path
+    except json.JSONDecodeError as e:
+        logger.error(f"Error parsing JSON from {selected_api}: {str(e)}")
+        raise
     except Exception as e:
         logger.error(f"❌ Error en scraping de Vea: {str(e)}")
         raise
 
-def log_products_summary(**context):
-    """Log de resumen de productos encontrados"""
-    vea_result = context['ti'].xcom_pull(key='vea_result', task_ids='scrape_vea')
+def create_bucket_if_not_exists(**context):
+    """
+    Create the MinIO bucket if it does not exist
+    """
+    s3_client = boto3.client(
+        's3',
+        endpoint_url=minio_endpoint,
+        aws_access_key_id=minio_access_key,
+        aws_secret_access_key=minio_secret_key
+    )
 
-    if not vea_result:
-        logger.info(f"No se encontraron resultados de Vea.")
+    
+    try:
+        s3_client.head_bucket(Bucket=bucket_name)
+        logger.info(f"Bucket '{bucket_name}' already exists.")
+    except ClientError as e:
+        if e.response['Error']['Code'] == '404':
+            s3_client.create_bucket(Bucket=bucket_name)
+            logger.info(f"Bucket '{bucket_name}' created successfully.")
+        else:
+            logger.error(f"Error checking/creating bucket: {str(e)}")
+            raise
+
+def upload_json_to_minio(**context):
+    """
+    Upload the json file to MinIO bucket using boto3 directly
+    """
+    s3_client = boto3.client(
+        's3',
+        endpoint_url=minio_endpoint,
+        aws_access_key_id=minio_access_key,
+        aws_secret_access_key=minio_secret_key
+    )
+
+    json_file_path = context['task_instance'].xcom_pull(key='json_file_path')
+    if not json_file_path:
+        logger.error("No JSON file path found in XCom.")
         return
-    
-    products = vea_result.get('items', [])
-    
-    if not products:
-        logger.info(f"No se encontraron productos en Vea.")
-        return
-    
-    logger.info(f"Resumen de productos encontrados en Vea:")
-    logger.info(f"Total de productos: {len(products)}")
-    logger.info(f"Páginas procesadas: {vea_result.get('pages_processed', 0)}")
-    logger.info(f"Total items encontrados: {vea_result.get('total_items', 0)}")
 
-    # Optionally log first few products for debugging
-    for i, product in enumerate(products[:3]):  # Show first 3 products
-        logger.info(f"Producto {i+1}: {product.get('name', 'Sin nombre')} - ${product.get('price', 'Sin precio')}")
+    object_name = f"vea/dulce_de_leche/{datetime.now().strftime('%Y-%m-%d')}.json"
 
-
+    try:
+        s3_client.upload_file(json_file_path, bucket_name, object_name)
+        logger.info(f"JSON file uploaded to MinIO: {object_name}")
+    except (ClientError, EndpointConnectionError) as e:
+        logger.error(f"Error uploading JSON file to MinIO: {str(e)}")
+        raise
 
 # ====== Definición de las tareas del DAG ======
+create_bucket_task = PythonOperator(
+    task_id='create_bucket_if_not_exists',
+    python_callable=create_bucket_if_not_exists,
+    dag=dag,
+)
 
 scrape_vea_task = PythonOperator(
     task_id='scrape_vea',
     python_callable=run_vea_scraping,
-    dag=dag
+    dag=dag,
 )
 
-log_summary = PythonOperator(
-    task_id='log_products_summary',
-    python_callable=log_products_summary,
-    dag=dag
+upload_file_to_minio = PythonOperator(
+    task_id='upload_json_to_minio',
+    python_callable=upload_json_to_minio,
+    dag=dag,
 )
 
-scrape_vea_task >> log_summary
+# Dependencias: crear bucket -> scrape -> subir a minio
+create_bucket_task >> scrape_vea_task >> upload_file_to_minio

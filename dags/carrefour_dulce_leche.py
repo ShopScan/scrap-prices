@@ -30,7 +30,6 @@ default_args = {
 dag = DAG(
     'carrefour_dulce_de_leche_prices',
     default_args=default_args,
-    description='Scraping de precios de dulce de leche de Carrefour',
     schedule_interval='0 8 * * *',  # Ejecutar diariamente a las 8:00 AM
     max_active_runs=1,
     tags=['scraping', 'carrefour', 'precios']

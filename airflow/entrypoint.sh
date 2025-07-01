@@ -28,5 +28,17 @@ else
   echo "Conexión postgres_default ya existe."
 fi
 
+if ! airflow connections get minio_default > /dev/null 2>&1; then
+  echo "Creando conexión minio_default..."
+  airflow connections add 'minio_default' \
+    --conn-type 'minio' \
+    --conn-login 'minio' \
+    --conn-password 'minio123' \
+    --conn-host 'minio' \
+    --conn-port '9000'
+else
+  echo "Conexión minio_default ya existe."
+fi
+
 # Ejecutar el comando original (ej: webserver, scheduler, etc.)
 exec /entrypoint "$@"
