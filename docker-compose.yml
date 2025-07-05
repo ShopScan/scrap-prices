@@ -26,6 +26,7 @@ services:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor     # suficiente para tareas async
       AIRFLOW__WEBSERVER__SECRET_KEY: "REEMPLAZAME"
       AIRFLOW__core__LOAD_EXAMPLES: "False"
+      GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/shop-scan-ar-40e81820454a.json
     ports:
       - "8080:8080"
     volumes:
@@ -33,13 +34,14 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./requirements.txt:/requirements.txt   # instala deps extra al arrancar
+      - ./include:/opt/airflow/include  # dbt project and other includes
+      - ./shop-scan-ar-40e81820454a.json:/opt/airflow/shop-scan-ar-40e81820454a.json  # GCP credentials
     command: >
       bash -c "
         airflow db migrate &&
         airflow users create --username admin --password admin \
                              --firstname Admin --lastname User --role Admin \
                              --email admin@example.com || true
-        pip install --no-cache-dir -r /requirements.txt ;
         exec airflow webserver
       "
 
@@ -53,13 +55,16 @@ services:
     environment:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/shop-scan-ar-40e81820454a.json
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./requirements.txt:/requirements.txt
+      - ./include:/opt/airflow/include  # dbt project and other includes
+      - ./shop-scan-ar-40e81820454a.json:/opt/airflow/shop-scan-ar-40e81820454a.json  # GCP credentials
     command: >
-      bash -c "pip install --no-cache-dir -r /requirements.txt && exec airflow scheduler"
+      bash -c "exec airflow scheduler"
 
   airflow-triggerer:        # necesario para tareas deferrables/async
     build: ./airflow
@@ -71,11 +76,29 @@ services:
     environment:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/shop-scan-ar-40e81820454a.json
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
+      - ./include:/opt/airflow/include  # dbt project and other includes
+      - ./shop-scan-ar-40e81820454a.json:/opt/airflow/shop-scan-ar-40e81820454a.json  # GCP credentials
     command: airflow triggerer
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio-data:/data
 
 volumes:
   postgres-data:
+  minio-data:

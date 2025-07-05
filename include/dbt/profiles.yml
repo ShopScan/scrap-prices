@@ -1,0 +1,26 @@
+scrap_prices_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: shop-scan-ar
+      dataset: scrap_prices_dev
+      keyfile: /opt/airflow/shop-scan-ar-40e81820454a.json
+      threads: 4
+      timeout_seconds: 300
+      location: US
+      priority: interactive
+      retries: 1
+    
+    prod:
+      type: bigquery
+      method: service-account
+      project: shop-scan-ar
+      dataset: scrap_prices_prod
+      keyfile: /opt/airflow/shop-scan-ar-40e81820454a.json
+      threads: 4
+      timeout_seconds: 300
+      location: US
+      priority: interactive
+      retries: 1

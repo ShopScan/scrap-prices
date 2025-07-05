@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: stg_raw_prices
+    description: Staging model for raw scraped price data
+    columns:
+      - name: product_name
+        description: Original product name
+      - name: clean_product_name
+        description: Cleaned and standardized product name
+        tests:
+          - not_null
+      - name: price_numeric
+        description: Price as numeric value
+        tests:
+          - not_null
+      - name: clean_store_name
+        description: Cleaned and standardized store name
+      - name: scraped_date
+        description: Date when the data was scraped
+      - name: scraped_datetime
+        description: Timestamp when the data was scraped
+
+  - name: mart_price_analytics
+    description: Analytics table for price trends and changes
+    columns:
+      - name: product_name
+        description: Product name
+      - name: store_name
+        description: Store name
+      - name: avg_daily_price
+        description: Average price for the day
+      - name: daily_price_change_pct
+        description: Percentage change from previous day
+      - name: vs_7day_avg_change_pct
+        description: Percentage change vs 7-day average
+
+  - name: mart_store_comparison
+    description: Store comparison analytics for price comparison
+    columns:
+      - name: product_name
+        description: Product name
+      - name: store_name
+        description: Store name
+      - name: current_price
+        description: Current price of the product
+      - name: price_rank
+        description: Ranking of store by price (1 = cheapest)
+      - name: is_cheapest
+        description: Boolean indicating if this is the cheapest option
+      - name: pct_diff_vs_cheapest
+        description: Percentage difference vs cheapest option

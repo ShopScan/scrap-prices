@@ -23,5 +23,14 @@ RUN apt-get update && apt-get install -y \
 
 USER airflow
 
+# Install Playwright
 RUN pip install --no-cache-dir "playwright>=1.44,<2" && \
     playwright install chromium
+
+# Install dbt and essential packages
+RUN pip install --no-cache-dir \
+    dbt-core==1.7.0 \
+    dbt-bigquery==1.7.0 \
+    requests==2.32.0 \
+    beautifulsoup4==4.12.3 \
+    pandas==2.2.2
