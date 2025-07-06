@@ -1,141 +1,91 @@
-#[SCRAPER]ScraperdePrecios-SupermercadosArgentinos
+# Scraper de Precios - Supermercados Argentinos
 
-SistemaautomatizadodescrapingdepreciosusandoApacheAirflow,DockeryGoogleCloudPlatform.
+Sistema automatizado de scraping de precios usando Apache Airflow, Docker y Google Cloud Platform.
 
-##[ARQUITECTURA]Arquitectura
+## Arquitectura
 
--**ApacheAirflow**:Orquestacióndetareas
--**Playwright**:Webscrapingresistente
--**PostgreSQL**:BasededatosdeAirflow
--**MinIO**:Almacenamientodeobjetos
--**BigQuery**:Datawarehouse
--**dbt**:Transformacióndedatos
--**Docker**:Containerización
+- **Apache Airflow**: Orquestación de tareas  
+- **Playwright**: Web scraping resistente  
+- **PostgreSQL**: Base de datos de Airflow  
+- **MinIO**: Almacenamiento de objetos  
+- **BigQuery**: Data warehouse  
+- **dbt**: Transformación de datos  
+- **Docker**: Containerización  
 
-##[SETUP]InstalaciónRápida
+## Instalación Rápida
 
-###Prerrequisitos
--DockeryDockerCompose
--CuentadeGoogleCloudPlatform
--ServiceAccountdeGCPconpermisosBigQuery
+### Prerrequisitos  
+- Docker y Docker Compose  
+- Cuenta de Google Cloud Platform  
+- Service Account de GCP con permisos BigQuery  
 
-###SetupAutomático
+### Setup Automático
 
 ```bash
-#1.Clonarrepositorio
-gitclonehttps://github.com/tu-usuario/scrap-prices.git
-cdscrap-prices
+# 1. Clonar repositorio
+git clone https://github.com/tu-usuario/scrap-prices.git
+cd scrap-prices
 
-#2.ConfigurarcredencialesGCP
-mkdir-pcredentials
-#CopiatuarchivoJSONdeGCPaquí:credentials/gcp-service-account.json
+# 2. Configurar credenciales GCP
+mkdir -p credentials
+# Copia tu archivo JSON de GCP aquí: credentials/gcp-service-account.json
 
-#3.Setupcompletoautomático
+# 3. Setup completo automático
 ./setup.sh
 ```
 
-Elscript`setup.sh`automáticamente:
--✅Verificaprerrequisitos
--🔐Generacredencialesseguras
--[SERVICIOS]ConfiguraProjectIDdeGCP
--🐳Construyeeiniciaservicios
--[USO]Muestracredencialesdeacceso
+El script `setup.sh` automáticamente:  
+- Verifica prerrequisitos  
+- Genera credenciales seguras  
+- Configura Project ID de GCP  
+- Construye e inicia servicios  
 
-##[SERVICIOS]AccesoaServicios
+## Acceso a Servicios
 
-Despuésdelsetup:
+Después del setup:
 
--**AirflowWebUI**:http://localhost:8080
--**MinIOConsole**:http://localhost:9001
+- **Airflow Web UI**: http://localhost:8080  
+- **MinIO Console**: http://localhost:9001  
 
-Lascredencialessemuestranalfinaldelsetup.
+Las credenciales se muestran al final del setup.
 
-##[USO]Uso
+## Uso
 
-1.**ActivarDAGs**enAirflowWebUI:
--`dulce_de_leche_unified`:Scrapingunificado
--`carrefour_dulce_de_leche_prices`:Carrefourespecífico
--`vea_sucursales`:Informaciónsucursales
--`dbt_bigquery_transformation`:Transformaciones
+1. **Activar DAGs** en Airflow Web UI:  
+   - `dulce_de_leche_unified`: Scraping unificado
 
-2.**Monitorear**ejecucionesenlainterfaz
-3.**Datos**almacenadosautomáticamenteenBigQuery
+2. **Monitorear** ejecuciones en la interfaz  
+3. **Datos** almacenados automáticamente en BigQuery  
 
-##[CONFIG]Configuración
-
-###AgregarProductos
-
-Editaarchivosen`dags/src/`:
--`carrefour_product_configs.py`
--`jumbo_product_configs.py`
--`vea_product_configs.py`
-
-###EstructuradeProducto
-```python
-{
-'name':'NombredelProducto',
-'search_term':'términobúsqueda',
-'brand_filter':'marca(opcional)',
-'price_selector':'selectorCSSprecio',
-'title_selector':'selectorCSStítulo'
-}
-```
-
-##🗂️EstructuradelProyecto
+## Estructura del Proyecto
 
 ```
 scrap-prices/
-├──airflow/#Dockerconfig
-├──dags/#DAGsAirflow
-│├──src/#Códigocompartido
-│├──dulce_de_leche/#Scrapersespecíficos
-│└──utilidades/#Utils
-├──include/dbt/#Transformacionesdbt
-├──credentials/#Credenciales(NOsubir)
-├──.env.example#Templatevariables
-└──requirements.txt#Dependencias
+├── airflow/ # Docker config
+├── dags/ # DAGs Airflow
+│   ├── src/ # Código compartido
+│   ├── dulce_de_leche/ # Scrapers específicos
+│   └── utilidades/ # Utils
+├── include/dbt/ # Transformaciones dbt
+├── credentials/ # Credenciales (NO subir)
+├── .env.example # Template variables
+└── requirements.txt # Dependencias
 ```
 
-##[SEGURIDAD]Seguridad
-
-###VerificarAntesdeCommit
-```bash
-./check_security.sh
-```
-
-###ArchivosProtegidos
--`.env`-Variablesdeentorno
--`credentials/`-ArchivosGCP
--`logs/`-Logscondatossensibles
-
-##[COMANDOS]ComandosÚtiles
+## Comandos Útiles
 
 ```bash
-#Verlogs
-docker-composelogs-f
+# Ver logs
+docker-compose logs -f
 
-#Reiniciarservicios
-docker-composerestart
+# Reiniciar servicios
+docker-compose restart
 
-#Detenertodo
-docker-composedown
+# Detener todo
+docker-compose down
 
-#Debugging
-docker-composeexecairflow-webserverbash
+# Debugging
+docker-compose exec airflow-webserver bash
 ```
 
-##[CONTRIB]Contribuir
-
-1.Forkelproyecto
-2.Creabranch(`gitcheckout-bfeature/nueva-feature`)
-3.Commitcambios(`gitcommit-am'Addfeature'`)
-4.Pushbranch(`gitpushoriginfeature/nueva-feature`)
-5.CreaPullRequest
-
-##[LICENCIA]Licencia
-
-MITLicense-ver`LICENSE`
-
----
-
-**AVISO:Aviso**:Proyectoeducativo.Respetatérminosdeserviciodesitiosweb.
+**AVISO**: Proyecto educativo. 
