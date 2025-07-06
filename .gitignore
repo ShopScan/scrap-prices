@@ -182,3 +182,24 @@ settings.py
 secrets.py
 
 shop-scan-ar-40e81820454a.json
+
+# Security - Environment files and credentials
+.env
+.env.local
+.env.production
+.env.staging
+*.json
+!.env.example
+credentials/
+secrets/
+
+# Docker and deployment
+docker-compose.override.yml
+.docker/
+
+# Logs and temporary files
+logs/
+*.log
+*.tmp
+.DS_Store
+Thumbs.db

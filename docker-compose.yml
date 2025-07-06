@@ -1,47 +1,52 @@
-# Compose specification file  – SIN 'version:'
 services:
   postgres:
     image: postgres:16
     restart: unless-stopped
     environment:
-      POSTGRES_USER: airflow
-      POSTGRES_PASSWORD: airflow
-      POSTGRES_DB: airflow
+      POSTGRES_USER: ${POSTGRES_USER:-airflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-airflow}
+      POSTGRES_DB: ${POSTGRES_DB:-airflow}
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-airflow}"]
       interval: 10s
       retries: 5
 
   airflow-webserver:
-    build: ./airflow          # usa la imagen custom que incluye Playwright
-    container_name: airflow-web
+    build: ./airflow
+    container_name: airflow-webserver
     restart: unless-stopped
     depends_on:
       postgres:
         condition: service_healthy
+      minio:
+        condition: service_healthy
     environment:
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-      AIRFLOW__CORE__EXECUTOR: LocalExecutor     # suficiente para tareas async
-      AIRFLOW__WEBSERVER__SECRET_KEY: "REEMPLAZAME"
-      AIRFLOW__core__LOAD_EXAMPLES: "False"
-      GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/shop-scan-ar-40e81820454a.json
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:-airflow}:${POSTGRES_PASSWORD:-airflow}@postgres/${POSTGRES_DB:-airflow}
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW__WEBSERVER__SECRET_KEY:-changeme}
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-/opt/airflow/credentials/gcp-service-account.json}
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
     ports:
       - "8080:8080"
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
-      - ./requirements.txt:/requirements.txt   # instala deps extra al arrancar
-      - ./include:/opt/airflow/include  # dbt project and other includes
-      - ./shop-scan-ar-40e81820454a.json:/opt/airflow/shop-scan-ar-40e81820454a.json  # GCP credentials
+      - ./requirements.txt:/requirements.txt
+      - ./include:/opt/airflow/include
+      - ./credentials:/opt/airflow/credentials
     command: >
       bash -c "
         airflow db migrate &&
-        airflow users create --username admin --password admin \
+        airflow users create --username ${AIRFLOW_ADMIN_USERNAME:-admin} --password ${AIRFLOW_ADMIN_PASSWORD:-admin} \
                              --firstname Admin --lastname User --role Admin \
-                             --email admin@example.com || true
+                             --email ${AIRFLOW_ADMIN_EMAIL:-admin@localhost} || true
         exec airflow webserver
       "
 
@@ -53,20 +58,23 @@ services:
       airflow-webserver:
         condition: service_started
     environment:
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:-airflow}:${POSTGRES_PASSWORD:-airflow}@postgres/${POSTGRES_DB:-airflow}
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/shop-scan-ar-40e81820454a.json
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-/opt/airflow/credentials/gcp-service-account.json}
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./requirements.txt:/requirements.txt
-      - ./include:/opt/airflow/include  # dbt project and other includes
-      - ./shop-scan-ar-40e81820454a.json:/opt/airflow/shop-scan-ar-40e81820454a.json  # GCP credentials
-    command: >
-      bash -c "exec airflow scheduler"
+      - ./include:/opt/airflow/include
+      - ./credentials:/opt/airflow/credentials
+    command: airflow scheduler
 
-  airflow-triggerer:        # necesario para tareas deferrables/async
+  airflow-triggerer:
     build: ./airflow
     container_name: airflow-triggerer
     restart: unless-stopped
@@ -74,15 +82,19 @@ services:
       airflow-webserver:
         condition: service_started
     environment:
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER:-airflow}:${POSTGRES_PASSWORD:-airflow}@postgres/${POSTGRES_DB:-airflow}
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/shop-scan-ar-40e81820454a.json
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS:-/opt/airflow/credentials/gcp-service-account.json}
+      MINIO_ENDPOINT: http://minio:9000
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      GCP_PROJECT_ID: ${GCP_PROJECT_ID}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
-      - ./include:/opt/airflow/include  # dbt project and other includes
-      - ./shop-scan-ar-40e81820454a.json:/opt/airflow/shop-scan-ar-40e81820454a.json  # GCP credentials
+      - ./include:/opt/airflow/include
+      - ./credentials:/opt/airflow/credentials
     command: airflow triggerer
 
   minio:
@@ -93,11 +105,16 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
     command: server /data --console-address ":9001"
     volumes:
       - minio-data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
 
 volumes:
   postgres-data:

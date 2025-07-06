@@ -35,7 +35,7 @@ class CarrefourProductConfigs:
             base_url="https://www.carrefour.com.ar/Lacteos-y-productos-frescos/Dulce-de-leche",
             product_selectors=cls.COMMON_PRODUCT_SELECTORS,
             no_results_selectors=cls.COMMON_NO_RESULTS_SELECTORS,
-            max_empty_pages=2,
+            max_empty_pages=0,
             max_scroll_attempts=3,
             target_elements=16
         )

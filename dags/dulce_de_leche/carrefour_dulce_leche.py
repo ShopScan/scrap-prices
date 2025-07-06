@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 # === Third Party ===
 import boto3
 from botocore.exceptions import ClientError, EndpointConnectionError
+from google.cloud import bigquery
 
 # === Airflow ===
 from airflow import DAG
@@ -29,6 +30,10 @@ bucket_name = 'carrefour-dulce-de-leche-prices'
 minio_endpoint = os.getenv('MINIO_ENDPOINT', 'http://localhost:9000')
 minio_access_key = os.getenv('MINIO_ACCESS_KEY', 'minioadmin')
 minio_secret_key = os.getenv('MINIO_SECRET_KEY', 'minioadmin')
+
+# === BigQuery Config ===
+GCP_PROJECT_ID = 'shop-scan-ar'
+DATASET_DEV = 'scrap_prices_dev'
 
 
 # ====== Configuración del DAG ======
@@ -96,6 +101,144 @@ def run_carrefour_scraping(**context):
     except Exception as e:
         logger.error(f"Error en scraping de Carrefour: {str(e)}")
         raise
+
+def check_bigquery_connection():
+    """Verificar conexión a BigQuery"""
+    try:
+        # Configurar credenciales
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/opt/airflow/shop-scan-ar-40e81820454a.json'
+        
+        # Crear cliente de BigQuery
+        client = bigquery.Client(project=GCP_PROJECT_ID)
+        
+        # Intentar hacer una consulta simple
+        query = "SELECT 1 as test"
+        query_job = client.query(query)
+        results = query_job.result()
+        
+        logging.info("Conexión a BigQuery exitosa")
+        return True
+    except Exception as e:
+        logging.error(f"Error conectando a BigQuery: {e}")
+        raise
+
+def save_to_bigquery(**context):
+    """
+    Función para guardar los datos de dulce de leche en BigQuery.
+    """
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/opt/airflow/shop-scan-ar-40e81820454a.json'
+    
+    # Obtener el path del archivo JSON del XCom
+    json_file_path = context['task_instance'].xcom_pull(key='json_file_path')
+    if not json_file_path:
+        logger.error("No se encontró el archivo JSON en XCom.")
+        return False
+    
+    try:
+        # Leer los datos del archivo JSON
+        with open(json_file_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        
+        products = data.get('items', [])
+        if not products:
+            logger.warning("No hay productos para guardar en BigQuery.")
+            return False
+        
+        # Crear cliente de BigQuery
+        client = bigquery.Client(project=GCP_PROJECT_ID)
+        dataset_dev = bigquery.Dataset(f"{GCP_PROJECT_ID}.{DATASET_DEV}")
+        
+        try:
+            client.create_dataset(dataset_dev, exists_ok=True)
+            logging.info(f"Dataset {DATASET_DEV} creado/verificado")
+        except Exception as e:
+            logging.info(f"Dataset {DATASET_DEV} ya existe o error: {e}")
+        
+        # Crear tabla de precios Carrefour dulce de leche
+        table_id = f"{GCP_PROJECT_ID}.{DATASET_DEV}.raw_carrefour_dulce_leche_prices"
+        
+        # Esquema de la tabla - datos crudos tal como vienen del scraping
+        schema = [
+            bigquery.SchemaField("raw_data", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("scraped_date", "DATE", mode="REQUIRED"),
+            bigquery.SchemaField("scraped_datetime", "TIMESTAMP", mode="REQUIRED"),
+            bigquery.SchemaField("store_name", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("category", "STRING", mode="REQUIRED"),
+        ]
+        
+        # Crear tabla si no existe
+        try:
+            table = bigquery.Table(table_id, schema=schema)
+            table = client.create_table(table, exists_ok=True)
+            logging.info(f"Tabla {table_id} creada/verificada")
+        except Exception as e:
+            logging.info(f"Tabla ya existe o error: {e}")
+        
+        # Verificar que la tabla existe antes de insertar
+        try:
+            table = client.get_table(table_id)
+            logging.info(f"Tabla {table_id} confirmada existente")
+        except Exception as e:
+            logging.error(f"Error verificando tabla: {e}")
+            # Intentar crear la tabla nuevamente
+            try:
+                table = bigquery.Table(table_id, schema=schema)
+                table = client.create_table(table)
+                logging.info(f"Tabla {table_id} creada en segundo intento")
+            except Exception as e2:
+                logging.error(f"Error creando tabla en segundo intento: {e2}")
+                raise
+        
+        # Preparar datos para insertar - datos crudos sin procesamiento
+        timestamp_now = datetime.now().isoformat()
+        date_now = datetime.now().date().isoformat()
+        rows_to_insert = []
+        
+        for product in products:
+            try:
+                # Guardar el producto completo como JSON crudo
+                raw_product_data = json.dumps(product, ensure_ascii=False)
+                
+                row = {
+                    "raw_data": raw_product_data,
+                    "scraped_date": date_now,
+                    "scraped_datetime": timestamp_now,
+                    "store_name": "CARREFOUR",
+                    "category": "dulce_de_leche",
+                }
+                rows_to_insert.append(row)
+                
+            except Exception as e:
+                logger.error(f"Error procesando producto: {e}")
+                continue
+        
+        # Insertar datos
+        if rows_to_insert:
+            try:
+                logging.info(f"Intentando insertar {len(rows_to_insert)} filas en {table_id}")
+                errors = client.insert_rows_json(table, rows_to_insert)
+                if errors:
+                    logging.error(f"Errores al insertar datos: {errors}")
+                    raise Exception(f"Errores en BigQuery: {errors}")
+                else:
+                    logging.info(f"Se insertaron {len(rows_to_insert)} productos correctamente en BigQuery")
+                    return True
+            except Exception as insert_error:
+                logging.error(f"Error durante la inserción: {insert_error}")
+                # Intentar obtener más información sobre la tabla
+                try:
+                    table_info = client.get_table(table_id)
+                    logging.info(f"Información de tabla: {table_info.table_id}, Schema: {table_info.schema}")
+                except Exception as table_error:
+                    logging.error(f"Error obteniendo información de tabla: {table_error}")
+                raise insert_error
+        else:
+            logging.warning("No hay datos para insertar")
+            return False
+        
+    except Exception as e:
+        logger.error(f"Error general guardando en BigQuery: {e}")
+        raise
     
 
 def create_bucket_if_not_exists(**context):
@@ -148,9 +291,10 @@ def upload_json_to_minio(**context):
 
 
 # ====== Definición de las tareas del DAG ======
-create_bucket_task = PythonOperator(
-    task_id='create_bucket_if_not_exists',
-    python_callable=create_bucket_if_not_exists,
+
+check_bigquery_connection_task = PythonOperator(
+    task_id='check_bigquery_connection',
+    python_callable=check_bigquery_connection,
     dag=dag,
 )
 
@@ -160,11 +304,12 @@ scrape_task = PythonOperator(
     dag=dag,
 )
 
-upload_file_to_minio = PythonOperator(
-    task_id='upload_json_to_minio',
-    python_callable=upload_json_to_minio,
+save_to_bigquery_task = PythonOperator(
+    task_id='save_to_bigquery',
+    python_callable=save_to_bigquery,
     dag=dag,
+    provide_context=True,
 )
 
-# Dependencias: crear bucket -> scrape -> subir a minio
-create_bucket_task >> scrape_task >> upload_file_to_minio
+# Dependencias: verificar BigQuery -> scrape -> subir a BigQuery
+check_bigquery_connection_task >> scrape_task >> save_to_bigquery_task

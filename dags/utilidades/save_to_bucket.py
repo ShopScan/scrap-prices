@@ -20,7 +20,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # === MinIO Config ===
-minio_endpoint = os.getenv('MINIO_ENDPOINT', 'http://localhost:9000')
+minio_endpoint = os.getenv('MINIO_ENDPOINT', 'http://minio:9000')
 minio_access_key = os.getenv('MINIO_ACCESS_KEY', 'minioadmin')
 minio_secret_key = os.getenv('MINIO_SECRET_KEY', 'minioadmin')
 

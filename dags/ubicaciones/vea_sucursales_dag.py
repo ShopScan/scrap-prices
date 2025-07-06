@@ -9,16 +9,19 @@ from datetime import datetime, timedelta
 
 # === Third Party ===
 from playwright.async_api import async_playwright
-from airflow.providers.postgres.hooks.postgres import PostgresHook
-from airflow.providers.postgres.operators.postgres import PostgresOperator
+from google.cloud import bigquery
 
 # === Airflow ===
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
 
 # === Logging Setup ===
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# === Bucket Name ===
+bucket_name = 'vea-ubication'
 
 # === MinIO Config ===
 minio_endpoint = os.getenv('MINIO_ENDPOINT', 'http://localhost:9000')
@@ -39,25 +42,39 @@ default_args = {
 }
 
 dag = DAG(
-    'vea_sucursales_unificado',
+    'vea_sucursales',
     default_args=default_args,
     description='Extractor unificado de sucursales VEA con procesamiento por lotes',
-    schedule_interval=timedelta(days=7),
+    schedule_interval='0 6 * * 1',  # Weekly on Mondays at 6 AM
     max_active_runs=1,
     tags=['vea', 'sucursales', 'scraping', 'playwright'],
 )
 
-create_table_sql = """
-    CREATE SCHEMA IF NOT EXISTS raw;
-    CREATE TABLE IF NOT EXISTS raw.raw_sucursales_vea (
-        id SERIAL PRIMARY KEY,
-        sucursal_id TEXT NOT NULL,
-        nombre TEXT NOT NULL,
-        provincia TEXT NOT NULL,
-        raw_data TEXT NOT NULL,
-        fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-"""
+DBT_PROJECT_PATH = '/opt/airflow/include/dbt'
+DBT_PROFILES_PATH = '/opt/airflow/include/dbt'
+GCP_PROJECT_ID = 'shop-scan-ar'
+DATASET_DEV = 'scrap_prices_dev'
+DATASET_PROD = 'scrap_prices_prod'
+
+def check_bigquery_connection():
+    """Verificar conexión a BigQuery"""
+    try:
+        # Configurar credenciales
+        os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/opt/airflow/shop-scan-ar-40e81820454a.json'
+        
+        # Crear cliente de BigQuery
+        client = bigquery.Client(project=GCP_PROJECT_ID)
+        
+        # Intentar hacer una consulta simple
+        query = "SELECT 1 as test"
+        query_job = client.query(query)
+        results = query_job.result()
+        
+        logging.info("Conexión a BigQuery exitosa")
+        return True
+    except Exception as e:
+        logging.error(f"Error conectando a BigQuery: {e}")
+        raise
 
 
 async def fetch_all_provinces():
@@ -139,8 +156,6 @@ def search_provinces(**context):
         logger.error("No se pudieron extraer provincias.")
         return {}
 
-
-
 async def process_branches(provinces):
     """
     Función de procesamiento de sucursales que se ejecuta en el DAG.
@@ -212,7 +227,6 @@ async def process_branches(provinces):
                 sucursales_data[nombre] = []
         await browser.close()
     return sucursales_data
-
 
 def fetch_all_branches(**context):
     """
@@ -361,7 +375,6 @@ async def process_information(stores):
                       for sucursal in provincia if sucursal.get('telefono'))
     return sucursales_completas
 
-
 def fetch_information(**context):
     """
     Función para procesar la información detallada de las sucursales.
@@ -380,72 +393,112 @@ def fetch_information(**context):
         logger.error("No se encontraron sucursales para procesar información detallada.")
         return {}
 
-def save_to_database(**context):
+def save_to_bigquery(**context):
     """
-    Función para guardar los datos extraídos en PostgreSQL.
+    Función para guardar los datos extraídos en BigQuery.
     """
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = '/opt/airflow/shop-scan-ar-40e81820454a.json'
     detailed_stores = context['ti'].xcom_pull(task_ids='process_information', key='detailed_stores')
     
     if not detailed_stores:
-        logger.error("No se encontraron datos para guardar en la base de datos.")
-        return
+        logger.error("No se encontraron datos para guardar en BigQuery.")
+        return False
     
     try:
-        # Conectar a PostgreSQL usando Airflow Hook
-        pg_hook = PostgresHook(postgres_conn_id='postgres_default')
+        # Crear cliente de BigQuery
+        client = bigquery.Client(project=GCP_PROJECT_ID)
+        dataset_dev = bigquery.Dataset(f"{GCP_PROJECT_ID}.{DATASET_DEV}")
+        dataset_prod = bigquery.Dataset(f"{GCP_PROJECT_ID}.{DATASET_PROD}")
         
-        # Limpiar datos anteriores (opcional)
-        pg_hook.run("TRUNCATE TABLE raw.raw_sucursales_vea;")
-        logger.info("Tabla limpiada correctamente")
+        try:
+            client.create_dataset(dataset_dev, exists_ok=True)
+            logging.info(f"Dataset {DATASET_DEV} creado/verificado")
+        except Exception as e:
+            logging.info(f"Dataset {DATASET_DEV} ya existe o error: {e}")
+            
+        try:
+            client.create_dataset(dataset_prod, exists_ok=True)
+            logging.info(f"Dataset {DATASET_PROD} creado/verificado")
+        except Exception as e:
+            logging.info(f"Dataset {DATASET_PROD} ya existe o error: {e}")
         
-        total_insertados = 0
+        # Crear tabla de sucursales VEA con estructura apropiada
+        table_id = f"{GCP_PROJECT_ID}.{DATASET_DEV}.raw_vea_sucursales"
+        
+        # Esquema de la tabla
+        schema = [
+            bigquery.SchemaField("sucursal_id", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("nombre", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("provincia", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("raw_data", "STRING", mode="REQUIRED"),
+            bigquery.SchemaField("fecha_extraccion", "TIMESTAMP", mode="REQUIRED"),
+            bigquery.SchemaField("fuente", "STRING", mode="REQUIRED"),
+        ]
+        
+        # Crear tabla si no existe
+        try:
+            table = bigquery.Table(table_id, schema=schema)
+            table = client.create_table(table, exists_ok=True)
+            logging.info(f"Tabla {table_id} creada/verificada")
+        except Exception as e:
+            logging.info(f"Tabla ya existe o error: {e}")
+        
+        # Eliminar datos anteriores de la tabla
+        try:
+            delete_query = f"DELETE FROM `{table_id}` WHERE TRUE"
+            query_job = client.query(delete_query)
+            query_job.result()  # Esperar a que termine
+            logging.info(f"Datos anteriores eliminados de la tabla {table_id}")
+        except Exception as e:
+            logging.warning(f"Error eliminando datos anteriores (puede ser que la tabla esté vacía): {e}")
+        
+        # Preparar datos para insertar
+        timestamp_now = datetime.now().isoformat()
+        rows_to_insert = []
         
         # Procesar cada provincia y sus sucursales
         for provincia_codigo, sucursales in detailed_stores.items():
-            logger.info(f"Guardando sucursales de provincia: {provincia_codigo}")
+            logger.info(f"Preparando datos de provincia: {provincia_codigo}")
             
             for sucursal in sucursales:
                 try:
                     # Convertir raw_data a JSON string
                     raw_data_json = json.dumps(sucursal.get('raw_data', []), ensure_ascii=False)
                     
-                    # Preparar SQL de inserción
-                    insert_sql = """
-                        INSERT INTO raw.raw_sucursales_vea (sucursal_id, nombre, provincia, raw_data)
-                        VALUES (%s, %s, %s, %s);
-                    """
-                    
-                    # Ejecutar inserción
-                    pg_hook.run(
-                        insert_sql,
-                        parameters=(
-                            sucursal.get('id', ''),
-                            sucursal.get('nombre', ''),
-                            provincia_codigo,
-                            raw_data_json
-                        )
-                    )
-                    
-                    total_insertados += 1
+                    row = {
+                        "sucursal_id": sucursal.get('id', ''),
+                        "nombre": sucursal.get('nombre', ''),
+                        "provincia": provincia_codigo,
+                        "raw_data": raw_data_json,
+                        "fecha_extraccion": timestamp_now,
+                        "fuente": "vea.com.ar/sucursales"
+                    }
+                    rows_to_insert.append(row)
                     
                 except Exception as e:
-                    logger.error(f"Error insertando sucursal {sucursal.get('nombre', 'unknown')}: {e}")
+                    logger.error(f"Error preparando sucursal {sucursal.get('nombre', 'unknown')}: {e}")
                     continue
         
-        logger.info(f"Proceso completado: {total_insertados} sucursales guardadas en la base de datos")
-        
-        # Verificar inserción
-        result = pg_hook.get_first("SELECT COUNT(*) FROM raw.raw_sucursales_vea;")
-        logger.info(f"Total de registros en la tabla: {result[0]}")
+        # Insertar datos
+        if rows_to_insert:
+            errors = client.insert_rows_json(table, rows_to_insert)
+            if errors:
+                logging.error(f"Errores al insertar datos: {errors}")
+                raise Exception(f"Errores en BigQuery: {errors}")
+            else:
+                logging.info(f"Se insertaron {len(rows_to_insert)} sucursales correctamente en BigQuery")
+                return True
+        else:
+            logging.warning("No hay datos para insertar")
+            return False
         
     except Exception as e:
-        logger.error(f"Error general guardando en base de datos: {e}")
+        logger.error(f"Error general guardando en BigQuery: {e}")
         raise
 
-create_table_task = PostgresOperator(
-    task_id="crear_tabla",
-    postgres_conn_id="postgres_default",
-    sql=create_table_sql,
+check_bigquery_connection_task = PythonOperator(
+    task_id='check_bigquery_connection',
+    python_callable=check_bigquery_connection,
     dag=dag,
 )
 
@@ -471,9 +524,22 @@ process_information_task = PythonOperator(
 )
 
 save_data_task = PythonOperator(
-    task_id='save_to_database',
-    python_callable=save_to_database,
+    task_id='save_to_bigquery',
+    python_callable=save_to_bigquery,
+    dag=dag,
+    provide_context=True,
+)
+
+dbt_run_int = BashOperator(
+    task_id='dbt_run_int',
+    bash_command=f"""
+    cd {DBT_PROJECT_PATH} && \
+    export DBT_PROFILES_DIR={DBT_PROFILES_PATH} && \
+    export GOOGLE_APPLICATION_CREDENTIALS=/opt/airflow/shop-scan-ar-40e81820454a.json && \
+    mkdir -p /tmp/dbt_logs /tmp/dbt_target && \
+    dbt run --select int_vea_sucursales --log-path /tmp/dbt_logs --target-path /tmp/dbt_target
+    """,
     dag=dag,
 )
 
-create_table_task >> search_provinces_task >> search_branches_task >> process_information_task >> save_data_task
+check_bigquery_connection_task >> search_provinces_task >> search_branches_task >> process_information_task >> save_data_task >> dbt_run_int
