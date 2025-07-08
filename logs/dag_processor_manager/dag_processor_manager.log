@@ -8942,3 +8942,492 @@ File Path                                                  PID    Runtime      #
 ================================================================================
 [2025-07-05T19:27:34.444+0000] {manager.py:737} INFO - Searching for files in /opt/airflow/dags
 [2025-07-05T19:27:34.446+0000] {manager.py:740} INFO - There are 9 files in /opt/airflow/dags
+[2025-07-06T20:54:46.387+0000] {manager.py:470} INFO - Processing files using up to 2 processes at a time 
+[2025-07-06T20:54:46.389+0000] {manager.py:471} INFO - Process each file at most once every 30 seconds
+[2025-07-06T20:54:46.389+0000] {manager.py:472} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-07-06T20:54:46.390+0000] {manager.py:737} INFO - Searching for files in /opt/airflow/dags
+[2025-07-06T20:54:46.411+0000] {manager.py:740} INFO - There are 9 files in /opt/airflow/dags
+[2025-07-06T20:54:46.553+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  ----------
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py          172  0.05s             0           0
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    0           0
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      0           0
+/opt/airflow/dags/utilidades/almacenamiento.py                                      0           0
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 0           0
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                0           0
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               0           0
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 0           0
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py    175  0.04s             0           0
+================================================================================
+[2025-07-06T20:55:19.762+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  5.68s           2025-07-06T20:54:55
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py    228  0.07s             1           0  2.39s           2025-07-06T20:54:48
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py          231  0.01s             1           0  1.63s           2025-07-06T20:54:48
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  1.37s           2025-07-06T20:54:50
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  1.17s           2025-07-06T20:54:50
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.46s           2025-07-06T20:54:56
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.35s           2025-07-06T20:54:56
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.26s           2025-07-06T20:54:56
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.20s           2025-07-06T20:55:17
+================================================================================
+[2025-07-06T20:55:53.071+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.41s           2025-07-06T20:55:50
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.40s           2025-07-06T20:55:50
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.33s           2025-07-06T20:55:52
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.26s           2025-07-06T20:55:51
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.25s           2025-07-06T20:55:29
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.24s           2025-07-06T20:55:29
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.20s           2025-07-06T20:55:48
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.19s           2025-07-06T20:55:29
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.17s           2025-07-06T20:55:29
+================================================================================
+[2025-07-06T20:56:26.550+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.30s           2025-07-06T20:56:19
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.29s           2025-07-06T20:56:21
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.28s           2025-07-06T20:56:22
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.28s           2025-07-06T20:56:21
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.25s           2025-07-06T20:56:02
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.22s           2025-07-06T20:56:21
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.21s           2025-07-06T20:56:02
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.16s           2025-07-06T20:56:02
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.16s           2025-07-06T20:56:02
+================================================================================
+[2025-07-06T20:56:59.918+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.35s           2025-07-06T20:56:51
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.31s           2025-07-06T20:56:51
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.28s           2025-07-06T20:56:52
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.23s           2025-07-06T20:56:35
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.23s           2025-07-06T20:56:36
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.21s           2025-07-06T20:56:51
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.18s           2025-07-06T20:56:35
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.18s           2025-07-06T20:56:50
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.13s           2025-07-06T20:56:36
+================================================================================
+[2025-07-06T20:57:33.318+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.34s           2025-07-06T20:57:22
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.33s           2025-07-06T20:57:22
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.31s           2025-07-06T20:57:23
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.23s           2025-07-06T20:57:09
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.22s           2025-07-06T20:57:09
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.21s           2025-07-06T20:57:22
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.17s           2025-07-06T20:57:20
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.16s           2025-07-06T20:57:09
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.15s           2025-07-06T20:57:09
+================================================================================
+[2025-07-06T20:58:06.881+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.37s           2025-07-06T20:57:52
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.36s           2025-07-06T20:57:52
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.30s           2025-07-06T20:57:53
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.25s           2025-07-06T20:57:41
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.25s           2025-07-06T20:57:52
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.25s           2025-07-06T20:57:42
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.21s           2025-07-06T20:57:51
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.19s           2025-07-06T20:57:41
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.15s           2025-07-06T20:57:42
+================================================================================
+[2025-07-06T20:58:40.202+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.30s           2025-07-06T20:58:24
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.29s           2025-07-06T20:58:22
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.29s           2025-07-06T20:58:22
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.23s           2025-07-06T20:58:15
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.21s           2025-07-06T20:58:15
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.20s           2025-07-06T20:58:23
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.17s           2025-07-06T20:58:15
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.16s           2025-07-06T20:58:21
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.14s           2025-07-06T20:58:15
+================================================================================
+[2025-07-06T20:59:13.956+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.65s           2025-07-06T20:58:53
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.64s           2025-07-06T20:58:53
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.28s           2025-07-06T20:58:54
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.23s           2025-07-06T20:58:48
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.22s           2025-07-06T20:58:48
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.22s           2025-07-06T20:58:53
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.17s           2025-07-06T20:58:48
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.17s           2025-07-06T20:58:51
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.15s           2025-07-06T20:58:48
+================================================================================
+[2025-07-06T20:59:46.410+0000] {manager.py:737} INFO - Searching for files in /opt/airflow/dags
+[2025-07-06T20:59:46.417+0000] {manager.py:740} INFO - There are 9 files in /opt/airflow/dags
+[2025-07-06T20:59:47.446+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.58s           2025-07-06T20:59:24
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.32s           2025-07-06T20:59:23
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.28s           2025-07-06T20:59:25
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.23s           2025-07-06T20:59:24
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.21s           2025-07-06T20:59:21
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.21s           2025-07-06T20:59:21
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.17s           2025-07-06T20:59:22
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.16s           2025-07-06T20:59:21
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.13s           2025-07-06T20:59:21
+================================================================================
+[2025-07-06T21:00:00.228+0000] {manager.py:452} INFO - Exiting gracefully upon receiving signal 15
+[2025-07-06T21:00:22.237+0000] {manager.py:470} INFO - Processing files using up to 2 processes at a time 
+[2025-07-06T21:00:22.238+0000] {manager.py:471} INFO - Process each file at most once every 30 seconds
+[2025-07-06T21:00:22.238+0000] {manager.py:472} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-07-06T21:00:22.238+0000] {manager.py:737} INFO - Searching for files in /opt/airflow/dags
+[2025-07-06T21:00:22.242+0000] {manager.py:740} INFO - There are 9 files in /opt/airflow/dags
+[2025-07-06T21:00:22.393+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  ----------
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py          172  0.07s             0           0
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    0           0
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      0           0
+/opt/airflow/dags/utilidades/almacenamiento.py                                      0           0
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 0           0
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                0           0
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               0           0
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 0           0
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py    175  0.05s             0           0
+================================================================================
+[2025-07-06T21:00:56.670+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  3.65s           2025-07-06T21:00:28
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  3.42s           2025-07-06T21:00:28
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  2.58s           2025-07-06T21:00:31
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.58s           2025-07-06T21:00:55
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.58s           2025-07-06T21:00:55
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.49s           2025-07-06T21:00:53
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.21s           2025-07-06T21:00:31
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.15s           2025-07-06T21:00:31
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.12s           2025-07-06T21:00:31
+================================================================================
+[2025-07-06T21:01:30.130+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.61s           2025-07-06T21:01:01
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.49s           2025-07-06T21:01:01
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.40s           2025-07-06T21:01:26
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.39s           2025-07-06T21:01:26
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.35s           2025-07-06T21:01:01
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.33s           2025-07-06T21:01:02
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.28s           2025-07-06T21:01:23
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.28s           2025-07-06T21:01:01
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.27s           2025-07-06T21:01:02
+================================================================================
+[2025-07-06T21:02:03.606+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.36s           2025-07-06T21:01:56
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.34s           2025-07-06T21:01:56
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.33s           2025-07-06T21:01:34
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.25s           2025-07-06T21:01:35
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.22s           2025-07-06T21:01:34
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.22s           2025-07-06T21:01:54
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.22s           2025-07-06T21:01:34
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.18s           2025-07-06T21:01:34
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.15s           2025-07-06T21:01:35
+================================================================================
+[2025-07-06T21:02:40.946+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py        373  0.05s             1           0  0.42s           2025-07-06T21:02:08
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.36s           2025-07-06T21:02:27
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.36s           2025-07-06T21:02:27
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.35s           2025-07-06T21:02:09
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.31s           2025-07-06T21:02:08
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py          376  0.01s             1           0  0.29s           2025-07-06T21:02:08
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.26s           2025-07-06T21:02:25
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.23s           2025-07-06T21:02:08
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.17s           2025-07-06T21:02:08
+================================================================================
+[2025-07-06T21:03:08.829+0000] {manager.py:452} INFO - Exiting gracefully upon receiving signal 15
+[2025-07-06T21:03:32.747+0000] {manager.py:470} INFO - Processing files using up to 2 processes at a time 
+[2025-07-06T21:03:32.748+0000] {manager.py:471} INFO - Process each file at most once every 30 seconds
+[2025-07-06T21:03:32.749+0000] {manager.py:472} INFO - Checking for new files in /opt/airflow/dags every 300 seconds
+[2025-07-06T21:03:32.749+0000] {manager.py:737} INFO - Searching for files in /opt/airflow/dags
+[2025-07-06T21:03:32.753+0000] {manager.py:740} INFO - There are 9 files in /opt/airflow/dags
+[2025-07-06T21:03:32.991+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                    PID  Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  ----------
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py          172  0.10s             0           0
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    0           0
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      0           0
+/opt/airflow/dags/utilidades/almacenamiento.py                                      0           0
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 0           0
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                0           0
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               0           0
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 0           0
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py    175  0.08s             0           0
+================================================================================
+[2025-07-06T21:04:06.433+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  1.71s           2025-07-06T21:03:37
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.51s           2025-07-06T21:04:04
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.48s           2025-07-06T21:04:06
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.41s           2025-07-06T21:04:05
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.40s           2025-07-06T21:04:05
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.40s           2025-07-06T21:04:05
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.21s           2025-07-06T21:03:37
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.14s           2025-07-06T21:03:37
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.13s           2025-07-06T21:03:37
+================================================================================
+[2025-07-06T21:04:40.738+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.30s           2025-07-06T21:04:36
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.30s           2025-07-06T21:04:36
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.29s           2025-07-06T21:04:37
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.25s           2025-07-06T21:04:38
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.23s           2025-07-06T21:04:38
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.22s           2025-07-06T21:04:36
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.19s           2025-07-06T21:04:38
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.18s           2025-07-06T21:04:34
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.15s           2025-07-06T21:04:38
+================================================================================
+[2025-07-06T21:05:14.197+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.34s           2025-07-06T21:05:06
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.33s           2025-07-06T21:05:06
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.30s           2025-07-06T21:05:07
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.24s           2025-07-06T21:05:06
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.23s           2025-07-06T21:05:09
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.22s           2025-07-06T21:05:09
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.17s           2025-07-06T21:05:08
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.16s           2025-07-06T21:05:05
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.14s           2025-07-06T21:05:09
+================================================================================
+[2025-07-06T21:05:47.642+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.31s           2025-07-06T21:05:36
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.30s           2025-07-06T21:05:38
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.29s           2025-07-06T21:05:36
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.24s           2025-07-06T21:05:39
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.23s           2025-07-06T21:05:37
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.21s           2025-07-06T21:05:39
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.16s           2025-07-06T21:05:35
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.15s           2025-07-06T21:05:39
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.15s           2025-07-06T21:05:39
+================================================================================
+[2025-07-06T21:06:21.204+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.34s           2025-07-06T21:06:07
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.31s           2025-07-06T21:06:07
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.31s           2025-07-06T21:06:08
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.23s           2025-07-06T21:06:10
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.22s           2025-07-06T21:06:07
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.22s           2025-07-06T21:06:09
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.19s           2025-07-06T21:06:06
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.16s           2025-07-06T21:06:09
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.14s           2025-07-06T21:06:10
+================================================================================
+[2025-07-06T21:06:54.701+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.34s           2025-07-06T21:06:37
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.34s           2025-07-06T21:06:37
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.31s           2025-07-06T21:06:39
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.24s           2025-07-06T21:06:40
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.22s           2025-07-06T21:06:38
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.22s           2025-07-06T21:06:40
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.18s           2025-07-06T21:06:36
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.17s           2025-07-06T21:06:40
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.16s           2025-07-06T21:06:40
+================================================================================
+[2025-07-06T21:07:28.128+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.35s           2025-07-06T21:07:08
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.28s           2025-07-06T21:07:09
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.28s           2025-07-06T21:07:08
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.23s           2025-07-06T21:07:10
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.23s           2025-07-06T21:07:11
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.21s           2025-07-06T21:07:08
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.19s           2025-07-06T21:07:08
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.18s           2025-07-06T21:07:10
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.15s           2025-07-06T21:07:11
+================================================================================
+[2025-07-06T21:08:01.618+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.29s           2025-07-06T21:07:41
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.28s           2025-07-06T21:07:42
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.27s           2025-07-06T21:07:41
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.23s           2025-07-06T21:07:42
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.22s           2025-07-06T21:07:42
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.21s           2025-07-06T21:07:42
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.18s           2025-07-06T21:07:41
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.16s           2025-07-06T21:07:42
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.13s           2025-07-06T21:07:42
+================================================================================
+[2025-07-06T21:08:33.141+0000] {manager.py:737} INFO - Searching for files in /opt/airflow/dags
+[2025-07-06T21:08:33.147+0000] {manager.py:740} INFO - There are 9 files in /opt/airflow/dags
+[2025-07-06T21:08:35.176+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.30s           2025-07-06T21:08:15
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.29s           2025-07-06T21:08:15
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.29s           2025-07-06T21:08:15
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.22s           2025-07-06T21:08:15
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.21s           2025-07-06T21:08:16
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.20s           2025-07-06T21:08:15
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.16s           2025-07-06T21:08:15
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.15s           2025-07-06T21:08:15
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.13s           2025-07-06T21:08:16
+================================================================================
+[2025-07-06T21:09:08.710+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.30s           2025-07-06T21:08:47
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.30s           2025-07-06T21:08:48
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.28s           2025-07-06T21:08:48
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.24s           2025-07-06T21:08:48
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.22s           2025-07-06T21:08:48
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.22s           2025-07-06T21:08:48
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.16s           2025-07-06T21:08:47
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.15s           2025-07-06T21:08:48
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.14s           2025-07-06T21:08:48
+================================================================================
+[2025-07-06T21:09:42.312+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.30s           2025-07-06T21:09:21
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.29s           2025-07-06T21:09:21
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.27s           2025-07-06T21:09:21
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.23s           2025-07-06T21:09:22
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.23s           2025-07-06T21:09:21
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.19s           2025-07-06T21:09:21
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.17s           2025-07-06T21:09:22
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.17s           2025-07-06T21:09:21
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.15s           2025-07-06T21:09:21
+================================================================================
+[2025-07-07T00:09:58.740+0000] {manager.py:737} INFO - Searching for files in /opt/airflow/dags
+[2025-07-07T00:09:58.744+0000] {manager.py:740} INFO - There are 9 files in /opt/airflow/dags
+[2025-07-07T15:56:09.631+0000] {manager.py:737} INFO - Searching for files in /opt/airflow/dags
+[2025-07-07T15:56:09.634+0000] {manager.py:740} INFO - There are 9 files in /opt/airflow/dags
+[2025-07-07T15:56:23.091+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.59s           2025-07-07T15:56:10
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.55s           2025-07-07T15:56:10
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.50s           2025-07-07T15:56:10
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.43s           2025-07-07T15:56:11
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.20s           2025-07-07T15:56:10
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.19s           2025-07-07T15:56:10
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.18s           2025-07-07T15:56:10
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.13s           2025-07-07T15:56:09
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.12s           2025-07-07T15:56:11
+================================================================================
+[2025-07-07T15:56:57.191+0000] {manager.py:878} INFO - 
+================================================================================
+DAG File Processing Stats
+
+File Path                                                  PID    Runtime      # DAGs    # Errors  Last Runtime    Last Run
+---------------------------------------------------------  -----  ---------  --------  ----------  --------------  -------------------
+/opt/airflow/dags/dulce_de_leche/carrefour_dulce_leche.py                           1           0  0.42s           2025-07-07T15:56:41
+/opt/airflow/dags/dulce_de_leche/vea_dulce_leche.py                                 1           0  0.41s           2025-07-07T15:56:41
+/opt/airflow/dags/dulce_de_leche/jumbo_dulce_leche.py                               1           0  0.39s           2025-07-07T15:56:41
+/opt/airflow/dags/utilidades/save_to_bucket.py                                      1           0  0.33s           2025-07-07T15:56:42
+/opt/airflow/dags/ubicaciones/vea_sucursales_dag.py                                 1           0  0.32s           2025-07-07T15:56:41
+/opt/airflow/dags/ubicaciones/ubicacion_carrefour.py                                1           0  0.30s           2025-07-07T15:56:41
+/opt/airflow/dags/dulce_de_leche_unified_scraper.py                                 1           0  0.13s           2025-07-07T15:56:40
+/opt/airflow/dags/utilidades/dbt_bigquery_dag.py                                    1           0  0.11s           2025-07-07T15:56:41
+/opt/airflow/dags/utilidades/almacenamiento.py                                      1           0  0.11s           2025-07-07T15:56:42
+================================================================================
