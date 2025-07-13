@@ -125,11 +125,11 @@ fi
 # Construir e iniciar servicios
 echo ""
 echo -e "${BLUE}Construyendo contenedores...${NC}"
-docker-compose build
+docker compose build
 
 echo ""
 echo -e "${BLUE}Iniciando servicios...${NC}"
-docker-compose up -d
+docker compose up -d
 
 # Esperar servicios
 echo ""
@@ -139,7 +139,7 @@ sleep 30
 # Mostrar estado
 echo ""
 echo -e "${BLUE}Estado de servicios:${NC}"
-docker-compose ps
+docker compose ps
 
 # Obtener credenciales
 echo ""
@@ -174,7 +174,7 @@ echo "  Usuario: $MINIO_USER"
 echo "  Password: $MINIO_PASSWORD"
 echo ""
 echo -e "${YELLOW}Si Airflow no acepta las credenciales, ejecuta:${NC}"
-echo "docker-compose exec airflow-webserver airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password $ADMIN_PASSWORD"
+echo "docker compose exec airflow-webserver airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password $ADMIN_PASSWORD"
 echo ""
 echo -e "${BLUE}Próximos pasos:${NC}"
 echo "1. Acceder a Airflow Web UI"
@@ -182,7 +182,7 @@ echo "2. Activar los DAGs necesarios"
 echo "3. Monitorear ejecuciones"
 echo ""
 echo -e "${BLUE}Comandos útiles:${NC}"
-echo "• Ver logs: docker-compose logs -f"
-echo "• Reiniciar: docker-compose restart"
-echo "• Detener: docker-compose down"
+echo "• Ver logs: docker compose logs -f"
+echo "• Reiniciar: docker compose restart"
+echo "• Detener: docker compose down"
 echo "• Ver archivo .env: cat .env"
