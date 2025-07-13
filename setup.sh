@@ -23,7 +23,7 @@ if ! command -v docker &> /dev/null; then
     exit 1
 fi
 
-if ! command -v docker-compose &> /dev/null; then
+if ! command -v docker compose &> /dev/null; then
     echo -e "${RED}ERROR: Docker Compose no está instalado${NC}"
     echo "Instala Docker Compose: https://docs.docker.com/compose/install/"
     exit 1
